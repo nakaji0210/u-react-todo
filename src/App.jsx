@@ -21,6 +21,16 @@ export const App = () => {
     setTodoText("");
   };
 
+  // 削除ボタンのアクションを定義
+  const onClickDeleteTodo = (index) => {
+    // 改めて未完了TODOをスプレッド構文で取得
+    const targetTodos = [...incompleteTodos];
+    // splace関数で対象のindexを　１つ削除
+    targetTodos.splice(index, 1);
+    // 未完了TODOのstateを更新する
+    setIncompleteTodos(targetTodos);
+  };
+
   return (
     <>
       <div className="input-area">
@@ -35,12 +45,12 @@ export const App = () => {
       <div className="incomplete-area">
         <p className="title">未完了のTODO</p>
         <ul>
-          {incompleteTodos.map((todo) => {
+          {incompleteTodos.map((todo, index) => {
             return (
               <div key={todo} className="list-row">
                 <li>{todo}</li>
                 <button>完了</button>
-                <button>削除</button>
+                <button onClick={() => onClickDeleteTodo(index)}>削除</button>
               </div>
             );
           })}
@@ -52,7 +62,7 @@ export const App = () => {
         <ul>
           {completeTodos.map((todo) => {
             return (
-              <div className="list-row">
+              <div key={todo} className="list-row">
                 <li>{todo}</li>
                 <button>戻す</button>
               </div>
